@@ -30,12 +30,14 @@ import {
   UserCircle2Icon,
   UserPen,
   UserX2Icon,
-  X
+  X,
+  Bot
 } from 'lucide-react';
 
 export type Icon = LucideIcon;
 
 export const Icons = {
+  bot: Bot,
   dashboard: LayoutDashboardIcon,
   logo: Command,
   login: LogIn,

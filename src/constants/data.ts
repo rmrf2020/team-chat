@@ -22,6 +22,14 @@ export const navItems: NavItem[] = [
     items: [] // Empty array as there are no child items for Dashboard
   },
   {
+    title: 'Chat',
+    url: '/dashboard/chat',
+    icon: 'bot',
+    isActive: false,
+    shortcut: ['c', 'c'],
+    items: [] // Empty array as there are no child items for Chat
+  },
+  {
     title: 'Product',
     url: '/dashboard/product',
     icon: 'product',
