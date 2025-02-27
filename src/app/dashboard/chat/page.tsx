@@ -130,86 +130,13 @@ export default function Chat() {
         <div className='flex items-center justify-between px-4'>
           <h1 className='text-base font-medium text-neutral-900'>对话</h1>
           <div className='flex items-center gap-4'>
-            <Select
-              value={selectedModel || ''}
-              onValueChange={handleModelChange}
-              disabled={isLoadingModels}
-            >
-              <SelectTrigger className='w-[220px] truncate'>
-                <SelectValue>
-                  {selectedModelInfo ? (
-                    <div className='flex items-center'>
-                      <span className='truncate'>{selectedModelInfo.name}</span>
-                      <span className='ml-1 text-xs text-gray-500'>
-                        ({selectedModelInfo.provider.name})
-                        {selectedModelInfo.isDefault && (
-                          <span className='ml-1 text-green-500'>默认</span>
-                        )}
-                      </span>
-                    </div>
-                  ) : isLoadingModels ? (
-                    '加载中...'
-                  ) : (
-                    '选择模型'
-                  )}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {Object.entries(groupedModels).map(
-                  ([providerName, providerModels]) => (
-                    <SelectGroup key={providerName}>
-                      <SelectLabel className='text-sm font-semibold'>
-                        {providerName}
-                      </SelectLabel>
-                      {providerModels.map((model) => (
-                        <SelectItem
-                          key={model.id}
-                          value={model.id}
-                          className='pl-6'
-                        >
-                          <div className='flex items-center'>
-                            <div className='max-w-[180px] truncate'>
-                              {model.name}
-                            </div>
-                            {model.isDefault && (
-                              <span className='ml-1 text-xs text-green-500'>
-                                默认
-                              </span>
-                            )}
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  )
-                )}
-              </SelectContent>
-            </Select>
-            <button
-              onClick={handleNewChat}
-              className='flex items-center gap-1.5 rounded-md px-2 py-1 text-sm text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900'
-            >
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                className='h-4 w-4'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-                strokeWidth={1.5}
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M12 4v16m8-8H4'
-                />
-              </svg>
-              <span>新建对话</span>
-            </button>
+            {/* 顶部控制区域可以为未来功能预留 */}
           </div>
         </div>
       </div>
 
-      {/* 主聊天区域 */}
-      <div className='scrollbar-hide flex-1 overflow-y-auto pb-20'>
+      {/* 主聊天区域 - 恢复最大宽度 */}
+      <div className='scrollbar-hide flex-1 overflow-y-auto pb-28'>
         <div className='mx-auto max-w-2xl px-4 py-4'>
           {messages.length === 0 && (
             <div className='animate-fade-in py-20 text-center'>
@@ -296,9 +223,92 @@ export default function Chat() {
       {/* 底部输入区域 - 固定在底部 */}
       <div className='absolute bottom-0 left-0 right-0 border-t border-neutral-100 bg-white/80 backdrop-blur-md'>
         <div className='mx-auto max-w-2xl px-4 py-3'>
+          <div className='mb-2 flex items-center gap-3'>
+            <Select
+              value={selectedModel || ''}
+              onValueChange={handleModelChange}
+              disabled={isLoadingModels}
+            >
+              <SelectTrigger className='h-9 w-[220px] truncate'>
+                <SelectValue>
+                  {selectedModelInfo ? (
+                    <div className='flex items-center'>
+                      <span className='truncate'>{selectedModelInfo.name}</span>
+                      <span className='ml-1 text-xs text-gray-500'>
+                        ({selectedModelInfo.provider.name})
+                        {selectedModelInfo.isDefault && (
+                          <span className='ml-1 text-green-500'>默认</span>
+                        )}
+                      </span>
+                    </div>
+                  ) : isLoadingModels ? (
+                    '加载中...'
+                  ) : (
+                    '选择模型'
+                  )}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(groupedModels).map(
+                  ([providerName, providerModels]) => (
+                    <SelectGroup key={providerName}>
+                      <SelectLabel className='text-sm font-semibold'>
+                        {providerName}
+                      </SelectLabel>
+                      {providerModels.map((model) => (
+                        <SelectItem
+                          key={model.id}
+                          value={model.id}
+                          className='pl-6'
+                        >
+                          <div className='flex items-center'>
+                            <div className='max-w-[180px] truncate'>
+                              {model.name}
+                            </div>
+                            {model.isDefault && (
+                              <span className='ml-1 text-xs text-green-500'>
+                                默认
+                              </span>
+                            )}
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  )
+                )}
+              </SelectContent>
+            </Select>
+
+            {/* 新建对话图标按钮 */}
+            <div className='group relative'>
+              <button
+                onClick={handleNewChat}
+                className='flex h-9 w-9 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors hover:bg-neutral-200 hover:text-neutral-900'
+                aria-label='新建对话'
+              >
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  className='h-5 w-5'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                  strokeWidth={1.5}
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    d='M12 4v16m8-8H4'
+                  />
+                </svg>
+              </button>
+              <div className='absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-neutral-800 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100'>
+                新建对话
+              </div>
+            </div>
+          </div>
           <form onSubmit={handleFormSubmit} className='relative'>
             <input
-              className='w-full rounded-full border border-neutral-200 bg-white px-3.5 py-2.5 text-[14px] text-neutral-800 transition-all placeholder:text-neutral-400 focus:border-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-300'
+              className='w-full rounded-full border border-neutral-200 bg-white px-4 py-4 text-[14px] text-neutral-800 transition-all placeholder:text-neutral-400 focus:border-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-300'
               value={input}
               placeholder={selectedModel ? '输入消息...' : '请先选择一个模型'}
               onChange={handleInputChange}
@@ -306,7 +316,7 @@ export default function Chat() {
             />
             <button
               type='submit'
-              className='absolute right-1.5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black p-1.5 text-white transition-all hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-300'
+              className='absolute right-2 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black p-2 text-white transition-all hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-300'
               disabled={loading || !input.trim() || !selectedModel}
               style={{
                 transform:
@@ -318,7 +328,7 @@ export default function Chat() {
             >
               {loading ? (
                 <svg
-                  className='h-4 w-4 animate-spin'
+                  className='h-5 w-5 animate-spin'
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
                   viewBox='0 0 24 24'
@@ -340,7 +350,7 @@ export default function Chat() {
               ) : (
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
-                  className='h-4 w-4'
+                  className='h-5 w-5'
                   viewBox='0 0 20 20'
                   fill='currentColor'
                 >

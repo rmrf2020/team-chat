@@ -8,10 +8,10 @@ import { ZodError } from 'zod';
 // 更新模型提供商
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = params.id;
+    const { id } = await params;
     const body = await req.json();
 
     const result = await updateModelProvider(id, body);
@@ -30,10 +30,10 @@ export async function PUT(
 // 删除模型提供商
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = params.id;
+    const { id } = await params;
 
     const result = await deleteModelProvider(id);
 

@@ -4,11 +4,17 @@ import { getModelsByProvider } from '@/services/actions/modelProviders';
 // 获取提供商的所有模型
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  {
+    params
+  }: {
+    params: Promise<{
+      id: string;
+    }>;
+  }
 ) {
   try {
     // 确保 params 是已解析的
-    const { id: providerId } = params;
+    const { id: providerId } = await params;
 
     const result = await getModelsByProvider(providerId);
 
