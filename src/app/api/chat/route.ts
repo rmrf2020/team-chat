@@ -1,16 +1,26 @@
 import { createResource } from '@/services/actions/resources';
-import { google } from '@ai-sdk/google';
 import { streamText, tool } from 'ai';
 import { z } from 'zod';
 import { findRelevantContent } from '@/services/ai/embedding';
+import { getModelFromProvider } from '@/services/ai/modelAdapter';
+import { getDefaultModelProvider } from '@/services/actions/modelProviders';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages, modelId } = await req.json();
+
+  // 获取默认提供商或使用指定的模型ID
+  const { success, data: defaultProvider } = await getDefaultModelProvider();
+
+  // 如果没有配置提供商，使用默认的Google模型
+  const model = defaultProvider
+    ? getModelFromProvider(defaultProvider, modelId || 'gemini-2.0-flash')
+    : 'google.gemini-2.0-flash';
+
   const result = streamText({
-    model: google('gemini-2.0-flash'),
+    model,
     messages,
     system: `You are a helpful assistant. Check your knowledge base before answering any questions.
     Only respond to questions using information from tool calls.

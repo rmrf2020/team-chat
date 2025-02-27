@@ -38,11 +38,24 @@ export const navItems: NavItem[] = [
     items: [] // No child items
   },
   {
+    title: '设置',
+    url: '#', // Placeholder as there is no direct link for the parent
+    icon: 'settings',
+    isActive: true,
+    items: [
+      {
+        title: '模型配置',
+        url: '/dashboard/settings/models',
+        icon: 'bot',
+        shortcut: ['m', 's']
+      }
+    ]
+  },
+  {
     title: 'Account',
     url: '#', // Placeholder as there is no direct link for the parent
     icon: 'billing',
     isActive: true,
-
     items: [
       {
         title: 'Profile',

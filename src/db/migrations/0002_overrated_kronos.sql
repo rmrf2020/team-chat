@@ -1,0 +1,1 @@
+ALTER TABLE "models" ADD COLUMN "is_default" boolean DEFAULT false;
