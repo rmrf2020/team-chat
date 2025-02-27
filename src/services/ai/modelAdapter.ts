@@ -1,6 +1,6 @@
-import { google } from '@ai-sdk/google';
-import { openai } from '@ai-sdk/openai';
-import { anthropic } from '@ai-sdk/anthropic';
+import { google, createGoogleGenerativeAI } from '@ai-sdk/google';
+import { openai, createOpenAI } from '@ai-sdk/openai';
+import { anthropic, createAnthropic } from '@ai-sdk/anthropic';
 import { ModelProvider } from '@/types/models';
 
 // 模型适配器类型
@@ -12,27 +12,37 @@ export type ModelAdapter = {
 // Google模型适配器
 export const googleAdapter: ModelAdapter = {
   getTextModel: (modelId: string, options?: any) => {
-    return google(modelId, options);
+    // 为每次调用创建新的配置了的实例
+    const configuredGoogle = createGoogleGenerativeAI(options);
+    return configuredGoogle(modelId);
   },
   getEmbeddingModel: (modelId: string, options?: any) => {
-    return google.textEmbeddingModel(modelId, options);
+    // 为每次调用创建新的配置了的实例
+    const configuredGoogle = createGoogleGenerativeAI(options);
+    return configuredGoogle.textEmbeddingModel(modelId);
   }
 };
 
 // OpenAI模型适配器
 export const openaiAdapter: ModelAdapter = {
   getTextModel: (modelId: string, options?: any) => {
-    return openai(modelId, options);
+    // 为每次调用创建新的配置了的实例
+    const configuredOpenAI = createOpenAI(options);
+    return configuredOpenAI(modelId);
   },
   getEmbeddingModel: (modelId: string, options?: any) => {
-    return openai.textEmbeddingModel(modelId, options);
+    // 为每次调用创建新的配置了的实例
+    const configuredOpenAI = createOpenAI(options);
+    return configuredOpenAI.textEmbeddingModel(modelId);
   }
 };
 
 // Anthropic模型适配器
 export const anthropicAdapter: ModelAdapter = {
   getTextModel: (modelId: string, options?: any) => {
-    return anthropic(modelId, options);
+    // 为每次调用创建新的配置了的实例
+    const configuredAnthropic = createAnthropic(options);
+    return configuredAnthropic(modelId);
   },
   getEmbeddingModel: (modelId: string, options?: any) => {
     // Anthropic目前不支持嵌入模型，可以返回null或抛出错误
