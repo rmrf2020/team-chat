@@ -22,9 +22,7 @@ export async function POST(req: Request) {
   const result = streamText({
     model,
     messages,
-    system: `You are a helpful assistant. Check your knowledge base before answering any questions.
-    Only respond to questions using information from tool calls.
-    if no relevant information is found in the tool calls, respond, "Sorry, I don't know."`,
+    system: `You are a helpful assistant, you can answer any question. and you can use the tools to get information.`,
     tools: {
       addResource: tool({
         description: `add a resource to your knowledge base.
