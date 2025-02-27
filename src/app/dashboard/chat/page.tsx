@@ -124,10 +124,10 @@ export default function Chat() {
   const selectedModelInfo = models.find((m) => m.id === selectedModel);
 
   return (
-    <div className='flex h-screen flex-col'>
-      {/* 头部导航栏 */}
-      <header className='sticky top-0 z-10 border-b border-neutral-100 backdrop-blur-sm'>
-        <div className='mx-auto flex max-w-5xl items-center justify-between px-6 py-3'>
+    <div className='relative flex h-full flex-col'>
+      {/* 聊天控制栏 */}
+      <div className='border-b border-neutral-100 py-3'>
+        <div className='flex items-center justify-between px-4'>
           <h1 className='text-base font-medium text-neutral-900'>对话</h1>
           <div className='flex items-center gap-4'>
             <Select
@@ -206,11 +206,11 @@ export default function Chat() {
             </button>
           </div>
         </div>
-      </header>
+      </div>
 
       {/* 主聊天区域 */}
-      <main className='scrollbar-hide mx-auto w-full flex-1 overflow-y-auto'>
-        <div className='mx-auto max-w-2xl px-4 py-4 pb-24'>
+      <div className='scrollbar-hide flex-1 overflow-y-auto pb-20'>
+        <div className='mx-auto max-w-2xl px-4 py-4'>
           {messages.length === 0 && (
             <div className='animate-fade-in py-20 text-center'>
               <div className='mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-neutral-50 shadow-sm'>
@@ -291,10 +291,10 @@ export default function Chat() {
 
           <div ref={messagesEndRef} />
         </div>
-      </main>
+      </div>
 
-      {/* 底部输入区域 */}
-      <footer className='fixed inset-x-0 bottom-0 border-t border-neutral-100 backdrop-blur-md'>
+      {/* 底部输入区域 - 固定在底部 */}
+      <div className='absolute bottom-0 left-0 right-0 border-t border-neutral-100 bg-white/80 backdrop-blur-md'>
         <div className='mx-auto max-w-2xl px-4 py-3'>
           <form onSubmit={handleFormSubmit} className='relative'>
             <input
@@ -350,7 +350,7 @@ export default function Chat() {
             </button>
           </form>
         </div>
-      </footer>
+      </div>
 
       {/* 添加CSS动画 */}
       <style jsx global>{`
