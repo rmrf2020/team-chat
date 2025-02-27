@@ -126,9 +126,9 @@ export default function Chat() {
   return (
     <div className='relative flex h-full flex-col'>
       {/* 聊天控制栏 */}
-      <div className='border-b border-neutral-100 py-3'>
+      <div className='border-b py-3'>
         <div className='flex items-center justify-between px-4'>
-          <h1 className='text-base font-medium text-neutral-900'>对话</h1>
+          <h1 className='font-medium'>对话</h1>
           <div className='flex items-center gap-4'>
             {/* 顶部控制区域可以为未来功能预留 */}
           </div>
@@ -140,10 +140,10 @@ export default function Chat() {
         <div className='mx-auto max-w-2xl px-4 py-4'>
           {messages.length === 0 && (
             <div className='animate-fade-in py-20 text-center'>
-              <div className='mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-neutral-50 shadow-sm'>
+              <div className='mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full shadow-sm'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
-                  className='h-6 w-6 text-neutral-400'
+                  className='h-6 w-6'
                   fill='none'
                   viewBox='0 0 24 24'
                   stroke='currentColor'
@@ -156,10 +156,8 @@ export default function Chat() {
                   />
                 </svg>
               </div>
-              <h2 className='text-lg font-medium text-neutral-800'>
-                开始新对话
-              </h2>
-              <p className='mt-1 text-sm text-neutral-500'>
+              <h2 className='text-lg font-medium'>开始新对话</h2>
+              <p className='mt-1 text-sm'>
                 {selectedModelInfo
                   ? `使用 ${selectedModelInfo.name} (${selectedModelInfo.provider.name}) ${selectedModelInfo.isDefault ? '默认' : ''} 模型开始对话`
                   : '请先选择一个模型'}
@@ -180,15 +178,15 @@ export default function Chat() {
                 <div
                   className={`max-w-[82%] px-3.5 py-2.5 ${
                     m.role === 'user'
-                      ? 'rounded-2xl rounded-tr-sm bg-black text-white'
-                      : 'rounded-2xl rounded-tl-sm bg-neutral-100 text-neutral-800'
-                  } shadow-sm transition-all`}
+                      ? 'rounded-2xl rounded-tr-sm'
+                      : 'rounded-2xl rounded-tl-sm'
+                  } shadow-sm`}
                 >
                   <div className='whitespace-pre-wrap text-[14px] leading-relaxed'>
                     {m.content.length > 0 ? (
                       m.content
                     ) : (
-                      <div className='flex items-center gap-1.5 text-xs text-neutral-500'>
+                      <div className='flex items-center gap-1.5 text-xs'>
                         <div className='animate-pulse'>
                           <svg
                             xmlns='http://www.w3.org/2000/svg'
@@ -221,7 +219,7 @@ export default function Chat() {
       </div>
 
       {/* 底部输入区域 - 固定在底部 */}
-      <div className='absolute bottom-0 left-0 right-0 border-t border-neutral-100 bg-white/80 backdrop-blur-md'>
+      <div className='absolute bottom-0 left-0 right-0 border-t backdrop-blur-md'>
         <div className='mx-auto max-w-2xl px-4 py-3'>
           <div className='mb-2 flex items-center gap-3'>
             <Select
@@ -234,7 +232,7 @@ export default function Chat() {
                   {selectedModelInfo ? (
                     <div className='flex items-center'>
                       <span className='truncate'>{selectedModelInfo.name}</span>
-                      <span className='ml-1 text-xs text-gray-500'>
+                      <span className='ml-1 text-xs'>
                         ({selectedModelInfo.provider.name})
                         {selectedModelInfo.isDefault && (
                           <span className='ml-1 text-green-500'>默认</span>
@@ -283,7 +281,7 @@ export default function Chat() {
             <div className='group relative'>
               <button
                 onClick={handleNewChat}
-                className='flex h-9 w-9 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors hover:bg-neutral-200 hover:text-neutral-900'
+                className='flex h-9 w-9 items-center justify-center rounded-full transition-colors'
                 aria-label='新建对话'
               >
                 <svg
@@ -301,14 +299,14 @@ export default function Chat() {
                   />
                 </svg>
               </button>
-              <div className='absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-neutral-800 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100'>
+              <div className='absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100'>
                 新建对话
               </div>
             </div>
           </div>
           <form onSubmit={handleFormSubmit} className='relative'>
             <input
-              className='w-full rounded-full border border-neutral-200 bg-white px-4 py-4 text-[14px] text-neutral-800 transition-all placeholder:text-neutral-400 focus:border-neutral-300 focus:outline-none focus:ring-1 focus:ring-neutral-300'
+              className='w-full rounded-full border px-4 py-4 text-[14px] focus:outline-none'
               value={input}
               placeholder={selectedModel ? '输入消息...' : '请先选择一个模型'}
               onChange={handleInputChange}
@@ -316,15 +314,8 @@ export default function Chat() {
             />
             <button
               type='submit'
-              className='absolute right-2 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-black p-2 text-white transition-all hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-300'
+              className='absolute right-2 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full disabled:cursor-not-allowed'
               disabled={loading || !input.trim() || !selectedModel}
-              style={{
-                transform:
-                  loading || !input.trim() || !selectedModel
-                    ? 'translateY(-50%) scale(0.95)'
-                    : 'translateY(-50%) scale(1)',
-                opacity: loading || !input.trim() || !selectedModel ? 0.8 : 1
-              }}
             >
               {loading ? (
                 <svg
